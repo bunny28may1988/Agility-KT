@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: focis
+  labels:
+    env: dev
+    app: focis-site
+spec:
+  containers:
+  - name: focis
+    image: 28may1988/niginx-demo:2.0
+    ports:
+    - name: focis-dev-ports
+      containerPort: 80	
+  

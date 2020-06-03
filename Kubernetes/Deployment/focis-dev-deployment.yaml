@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: focis-dev-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+     env: dev
+  template:
+    metadata:
+      name: focis-site
+      labels:
+        env: dev
+        app: focis
+    spec:
+      containers:
+      - name: focis
+        image: 28may1988/niginx-demo:2.0
+        ports:
+        - name: focis-dev-dev
+          containerPort: 80		
