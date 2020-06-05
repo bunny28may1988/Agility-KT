@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: focis-dev-service
+spec:
+  ports:
+  - port: 31313
+    nodePort: 31313
+    targetPort: focis-dev-port
+    protocol: TCP
+  selector:
+    app: focis
+  type: NodePort
