@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: focis-dev-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+     env: dev
+  template:
+    metadata:
+      name: focis-site
+      labels:
+        env: dev
+        app: focis
+    spec:
+      containers:
+      - name: focis
+        image: 28may1988/niginx-demo:2.0
+        ports:
+        - name: focis-dev-port
+          containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: focis-dev-service
+spec:
+  ports:
+  - port: 31313
+    nodePort: 31313
+    targetPort: focis-dev-port
+    protocol: TCP
+  selector:
+    env: dev
+  type: NodePort		
