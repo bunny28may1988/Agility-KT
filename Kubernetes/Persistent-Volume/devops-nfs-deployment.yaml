@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-devops-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: focis
+  template:
+    metadata:
+      labels:
+        app: focis
+    spec:
+      volumes:
+      - name: www
+        persistentVolumeClaim:
+          claimName: nfs-pvc-1
+      containers:
+      - name: focis-site
+        image: 28may1988/niginx-demo:2.0
+        ports:
+        - name: focis-port
+          containerPort: 80
+        volumeMounts:
+        - name: www
+          mountPath: /www
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nfs-devops-service
+spec:
+  ports:
+  - port: 31337
+    nodePort: 31337
+    targetPort: focis-port
+    protocol: TCP
+  selector:
+    app: focis
+  type: NodePort
